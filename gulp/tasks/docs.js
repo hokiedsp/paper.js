@@ -15,7 +15,7 @@ var gulp = require('gulp-v3'),
     rename = require('gulp-rename'),
     shell = require('gulp-shell'),
     options = require('../utils/options.js'),
-    run = require('run-sequence');
+    run = require('run-sequence').use(gulp);
 
 var docOptions = {
     local: 'docs', // Generates the offline docs
