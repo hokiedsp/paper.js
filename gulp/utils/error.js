@@ -10,9 +10,10 @@
  * All rights reserved.
  */
 
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    ERROR = gutil.colors.red('[ERROR]');
+var gulp = require('gulp-v3'),
+    colors = require('ansi-colors'),
+    log = require('fancy-log'),
+    ERROR = colors.red('[ERROR]');
 
 gulp.on('error', function(err) {
     var msg = err.toString();
@@ -21,7 +22,7 @@ gulp.on('error', function(err) {
     if (err.stack)
         msg += err.stack;
     msg.split(/\r\n|\n|\r/mg).forEach(function(line) {
-        gutil.log(ERROR, line);
+        log(ERROR, line);
     });
     this.emit('end');
 });
