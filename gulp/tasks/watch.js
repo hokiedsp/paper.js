@@ -10,16 +10,17 @@
  * All rights reserved.
  */
 
-var gulp = require('gulp'),
+var gulp = require('gulp-v3'),
     path = require('path'),
-    gutil = require('gulp-util');
+    colors = require('ansi-colors'),
+    log = require('fancy-log');
 
 gulp.task('watch', function () {
     gulp.watch('src/**/*.js', ['jshint'])
         .on('change', function(event) {
-            gutil.log(
-                gutil.colors.green('File ' + event.type + ': ') +
-                gutil.colors.magenta(path.basename(event.path))
+            log(
+                colors.green('File ' + event.type + ': ') +
+                colors.magenta(path.basename(event.path))
             );
         });
 });

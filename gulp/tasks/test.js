@@ -10,8 +10,7 @@
  * All rights reserved.
  */
 
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
+var gulp = require('gulp-v3'),
     qunits = require('gulp-qunits'),
     webserver = require('gulp-webserver');
 
