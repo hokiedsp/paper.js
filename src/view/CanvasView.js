@@ -84,7 +84,7 @@ var CanvasView = View.extend(/** @lends CanvasView# */{
             // our canvas element.
             ctx.restore();
             ctx.save();
-            ctx.scale(pixelRatio, pixelRatio);
+            // ctx.scale(pixelRatio, pixelRatio);
         }
     },
 
