@@ -52,7 +52,8 @@ var PaperScope = Base.extend(/** @lends PaperScope# */{
             applyMatrix: true,
             insertItems: true,
             handleSize: 4,
-            hitTolerance: 0
+            hitTolerance: 0,
+            hitOptions: {}
         });
         this.project = null;
         this.projects = [];
