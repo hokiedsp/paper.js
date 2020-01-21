@@ -9,7 +9,7 @@
  *
  * All rights reserved.
  *
- * Date: Tue Jan 21 14:32:40 2020 -0600
+ * Date: Tue Jan 21 16:58:04 2020 -0600
  *
  ***
  *
@@ -7692,10 +7692,13 @@ var CurveLocation = Base.extend({
 		this._intersection = this._next = this._previous = null;
 	},
 
-	_setCurve: function(curve) {
-		var path = curve._path;
+	_setPath: function(path) {
 		this._path = path;
 		this._version = path ? path._version : 0;
+	},
+
+	_setCurve: function(curve) {
+		this._setPath(curve._path);
 		this._curve = curve;
 		this._segment = null;
 		this._segment1 = curve._segment1;
@@ -7703,7 +7706,14 @@ var CurveLocation = Base.extend({
 	},
 
 	_setSegment: function(segment) {
-		this._setCurve(segment.getCurve());
+		var curve = segment.getCurve();
+		if (curve) {
+			this._setCurve(curve);
+		} else {
+			this._setPath(segment._path);
+			this._segment1 = segment;
+			this._segment2 = null;
+		}
 		this._segment = segment;
 		this._time = segment === this._segment1 ? 0 : 1;
 		this._point = segment._point.clone();
@@ -7909,7 +7919,7 @@ var CurveLocation = Base.extend({
 				offset = Curve.getLength(v,
 					end && count ? roots[count - 1] : 0,
 					!end && count ? roots[0] : 1);
-			offsets.push(count ? offset : offset / 64);
+			offsets.push(count ? offset : offset / 32);
 		}
 
 		function isInRange(angle, min, max) {
