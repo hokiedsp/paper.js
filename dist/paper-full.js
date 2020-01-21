@@ -9,7 +9,7 @@
  *
  * All rights reserved.
  *
- * Date: Sat Jan 18 10:54:48 2020 -0600
+ * Date: Tue Jan 21 14:32:40 2020 -0600
  *
  ***
  *
@@ -13449,21 +13449,18 @@ new function() {
 
 		_handleKeyEvent: function(type, event, key, character) {
 			var scope = this._scope,
-				tool = scope.tool,
-				keyEvent;
-
-			function emit(obj) {
-				if (obj.responds(type)) {
-					paper = scope;
-					obj.emit(type, keyEvent = keyEvent
-							|| new KeyEvent(type, event, key, character));
-				}
-			}
+				tool = scope.tool;
 
 			if (this.isVisible()) {
-				emit(this);
-				if (tool && tool.responds(type))
-					emit(tool);
+				if (this.responds(type)) {
+					paper = scope;
+					this.emit(type, new KeyEvent(type, event, key, character));
+				}
+
+				if (tool && tool.responds(type)) {
+					paper = scope;
+					tool.emit(type, new ToolKeyEvent(tool, type, event, key, character));
+				}
 			}
 		},
 
@@ -13892,6 +13889,67 @@ var ToolEvent = Event.extend({
 				+ ', count: ' + this.getCount()
 				+ ', modifiers: ' + this.getModifiers()
 				+ ' }';
+	}
+});
+
+var ToolKeyEvent = Event.extend({
+	_class: 'ToolKeyEvent',
+	_item: null,
+
+	initialize: function ToolKeyEvent(tool, type, event, key, character) {
+		this.tool = tool;
+		this.type = type;
+		this.event = event;
+		this.key = key;
+		this.character = character;
+	},
+
+	_choosePoint: function(point, toolPoint) {
+		return point ? point : toolPoint ? toolPoint.clone() : null;
+	},
+
+	getPoint: function() {
+		return this._choosePoint(this._lastPoint, this.tool._point || this.tool._lastPoint);
+	},
+
+	setPoint: function(lastPoint) {
+		this._lastPoint = lastPoint;
+	},
+
+	getDownPoint: function() {
+		return this._choosePoint(this._downPoint, this.tool._downPoint);
+	},
+
+	setDownPoint: function(downPoint) {
+		this._downPoint = downPoint;
+	},
+
+	getItem: function() {
+		if (!this._item) {
+			var result = this.tool._scope.project.hitTest(this.getLastPoint());
+			if (result) {
+				var item = result.item,
+					parent = item._parent;
+				while (/^(Group|CompoundPath)$/.test(parent._class)) {
+					item = parent;
+					parent = parent._parent;
+				}
+				this._item = item;
+			}
+		}
+		return this._item;
+	},
+
+	setItem: function(item) {
+		this._item = item;
+	},
+
+	toString: function() {
+		return "{ type: '" + this.type
+				+ "', key: '" + this.key
+				+ "', character: '" + this.character
+				+ "', modifiers: " + this.getModifiers()
+				+ " }";
 	}
 });
 
