@@ -133,11 +133,12 @@ var PaperScope = Base.extend(/** @lends PaperScope# */{
      *     when drawing selections
      * @option [settings.hitTolerance=0] {Number} the default tolerance for hit-
      *     tests, when no value is specified
-     * @option [settings.hitOptions={}] {Object} further modifies the default 
+     * @option [settings.hitOptions={}] {Object} further modifies the default
      *     options for hit-tests. If it contains hitTolerance property, it
      *     overrides the hitTolerance setting. Be aware that this settings will
      *     impact the mouse events' performance, i.e., refrain from enabling
-     *     computationally intensive tests like segments via this option.
+     *     computationally intensive tests like segments via this option. These
+     *     options are ignored if options argument is provided for hitTest()
      */
 
     /**
