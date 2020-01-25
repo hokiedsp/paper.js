@@ -134,7 +134,7 @@ var HitResult = Base.extend(/** @lends HitResult# */{
               guides: false,
               // Only hit selected objects
               selected: false
-            }, paper.settings.hitOptions, options);
+            }, options || paper.settings.hitOptions);
         }
     }
 });
