@@ -9,7 +9,7 @@
  *
  * All rights reserved.
  *
- * Date: Tue Jan 21 16:58:04 2020 -0600
+ * Date: Fri Jan 24 19:33:51 2020 -0600
  *
  ***
  *
@@ -5886,7 +5886,7 @@ var HitResult = Base.extend({
 			  bounds: false,
 			  guides: false,
 			  selected: false
-			}, paper.settings.hitOptions, options);
+			}, options || paper.settings.hitOptions);
 		}
 	}
 });
