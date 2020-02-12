@@ -9,7 +9,7 @@
  *
  * All rights reserved.
  *
- * Date: Fri Jan 24 19:33:51 2020 -0600
+ * Date: Tue Feb 11 21:41:31 2020 -0600
  *
  ***
  *
@@ -4060,12 +4060,17 @@ new function() {
 		}
 
 		if (!res) {
+			const foundClass = options.class && this instanceof options.class;
+			if (foundClass) options = options.extend(
+								{ class: this instanceof CompoundPath ? Path : false });
+
 			res = this._hitTestChildren(point, options, viewMatrix)
 				|| checkSelf
 					&& filter(this._hitTestSelf(point, options, viewMatrix,
 						this.getStrokeScaling() ? null
 							: viewMatrix._shiftless().invert()))
 				|| null;
+			if (foundClass && res) res.item = this;
 		}
 		if (res && res.point) {
 			res.point = matrix.transform(res.point);
@@ -8281,7 +8286,7 @@ var PathItem = Item.extend({
 				matched = [],
 				count = 0;
 			ok = true;
-			var boundsOverlaps = CollisionDetection.findBoundsOverlaps(paths1, paths2, Numerical.GEOMETRIC_EPSILON);
+			var boundsOverlaps = CollisionDetection.findItemBoundsCollisions(paths1, paths2, Numerical.GEOMETRIC_EPSILON);
 			for (var i1 = length1 - 1; i1 >= 0 && ok; i1--) {
 				var path1 = paths1[i1];
 				ok = false;
@@ -10895,8 +10900,8 @@ PathItem.inject(new function() {
 
 			if (inter) {
 				collect(inter);
-				while (inter && inter._prev)
-					inter = inter._prev;
+				while (inter && inter._previous)
+					inter = inter._previous;
 				collect(inter, start);
 			}
 			return crossings;
