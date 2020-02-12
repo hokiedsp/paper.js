@@ -640,6 +640,17 @@ test('hit-testing compound-paths', function() {
     });
     return result && result.item === path2;
   }, true);
+<<<<<<< HEAD
+=======
+  // When asking specifically for CompoundPath, she should get the top-most compoundPath
+  equals(function() {
+    var result = paper.project.hitTest(center, {
+      class: CompoundPath,
+      fill: true
+    });
+    return result && result.item === compoundPath;
+  }, true);
+>>>>>>> Fix/hitTest-class-compound
 });
 
 test('hit-testing clipped items', function() {
