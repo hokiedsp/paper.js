@@ -9,7 +9,7 @@
  *
  * All rights reserved.
  *
- * Date: Tue Feb 11 21:41:31 2020 -0600
+ * Date: Fri Feb 21 17:08:12 2020 -0600
  *
  ***
  *
@@ -10199,8 +10199,8 @@ var CompoundPath = PathItem.extend({
 
 	_hitTestChildren: function _hitTestChildren(point, options, viewMatrix) {
 		return _hitTestChildren.base.call(this, point,
-				options.class === Path || options.type === 'path' ? options
-					: Base.set({}, options, { fill: false }),
+				(options.class && options.class.prototype instanceof Path) || options.type === 'path' ? options
+					: options.clone().set({ fill: false }),
 				viewMatrix);
 	},
 
