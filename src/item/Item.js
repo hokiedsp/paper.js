@@ -3475,7 +3475,7 @@ new function() { // Injection scope for hit-test functions shared with project
      *
      * @name Item#shear
      * @function
-     * @param {Point} shear the horziontal and vertical shear factors as a point
+     * @param {Point} shear the horizontal and vertical shear factors as a point
      * @param {Point} [center={@link Item#position}]
      * @see Matrix#shear(shear[, center])
      */
@@ -3497,7 +3497,7 @@ new function() { // Injection scope for hit-test functions shared with project
      *
      * @name Item#skew
      * @function
-     * @param {Point} skew the horziontal and vertical skew angles in degrees
+     * @param {Point} skew the horizontal and vertical skew angles in degrees
      * @param {Point} [center={@link Item#position}]
      * @see Matrix#shear(skew[, center])
      */
